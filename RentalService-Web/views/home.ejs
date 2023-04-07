@@ -1,0 +1,568 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Made One</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="favicon.ico">
+
+        <!--Google Font link-->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+
+        <link rel="stylesheet" href="assets/css/slick/slick.css"> 
+        <link rel="stylesheet" href="assets/css/slick/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/animate.css">
+        <link rel="stylesheet" href="assets/css/iconfont.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="assets/css/bootsnav.css">
+
+        <!-- xsslider slider css -->
+
+
+        <!--<link rel="stylesheet" href="assets/css/xsslider.css">-->
+
+
+
+
+        <!--For Plugins external css-->
+        <!--<link rel="stylesheet" href="assets/css/plugins.css" />-->
+
+        <!--Theme custom css -->
+        <link rel="stylesheet" href="assets/css/style.css">
+        <!--<link rel="stylesheet" href="assets/css/colors/maron.css">-->
+
+        <!--Theme Responsive css-->
+        <link rel="stylesheet" href="assets/css/responsive.css" />
+
+        <script src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+
+    <body>
+
+
+        <!-- Preloader -->
+        <div id="loading">
+            <div id="loading-center">
+                <div id="loading-center-absolute">
+                    <div class="object" id="object_one"></div>
+                    <div class="object" id="object_two"></div>
+                    <div class="object" id="object_three"></div>
+                    <div class="object" id="object_four"></div>
+                </div>
+            </div>
+        </div><!--End off Preloader -->
+
+
+        <div class="culmn">
+            <!--Home page style-->
+            <nav class="navbar navbar-default bootsnav navbar-fixed">
+            
+                <!-- Start Top Search -->
+                <div class="top-search">
+                    <div class="container">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Top Search -->
+
+
+                <div class="container">                     
+
+                    <!-- Start Header Navigation -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand" href="/">
+                            <img src="assets/images/1logo.png" class="logo" alt="">
+                            <!--<img src="assets/images/footer-logo.png" class="logo logo-scrolled" alt="">-->
+                        </a>
+
+                    </div>
+                    <!-- End Header Navigation -->
+
+                    <!-- navbar menu -->
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="announcement?currentpage=1">공지사항</a></li>
+                            <li style="display: <%=admin[0]%>"><a href=<%=admin[1]%>>매장변경 신청서 목록</a></li>
+                            <li style="display: <%=admin[0]%>"><a href=<%=admin[2]%>>회원가입 승인</a></li>                            
+                            <li><a href="information_change">매장정보 변경 신청</a></li>
+                            <li><a href="#">다운로드</a></li>
+                            <li style="display: <%=login%>"><a href="/login">로그인</a></li>
+                            <li style="display: <%=logout%>"><a href="#"><%=users%>님 마이페이지</a></a></li>
+                            <li style="display: <%=logout%>"><a href="/logout">로그아웃</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div> 
+
+            </nav>
+                
+
+            <!--Home Sections-->
+
+            <section id="business" class="business bg-grey roomy-70" style="margin-top: 82px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="main_business">
+                            <div class="col-md-6">
+                                <div class="business_slid" style="width: 288px; height: 400px; margin-left: 100px;">
+                                    <div class="slid_shap bg-grey"></div>
+                                    <div class="business_items text-center">
+                                        <div class="business_item">
+                                            <div class="business_img">
+                                                <img src="assets/images/app_home.png" alt="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="business_item">
+                                            <div class="business_img">
+                                                <img src="assets/images/app_view.png" alt="" />
+                                            </div>
+                                        </div>
+
+                                        <div class="business_item">
+                                            <div class="business_img">
+                                                <img src="assets/images/app_profile.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="business_item sm-m-top-50">
+                                    <h2 class="text-uppercase"><strong>Made</strong> is Template For Business</h2>
+                                    <ul>
+                                        <li><i class="fa fa-arrow-circle-right"></i> 전국 스키/스노우보드 렌탈가 비교를 한 눈에</li>
+                                        <li><i class="fa  fa-arrow-circle-right"></i> 전화 예약은 그만! 터치로 쉽게 '간편 예약'</li>                                        
+                                    </ul>
+                                    <p class="m-top-20">이 어플은 전국 스키어, 보더들의 쉽고 편한 스키/보드 생활을 도와주는 어플입니다 :)</p>
+
+                                    <div class="business_btn">
+                                        <a href="#" class="btn btn-default m-top-20">이용문의</a>
+                                        <a href="/join" class="btn btn-primary m-top-20">매장 등록</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>            
+
+
+            <div class="sc-jShwLY hShJPh" style="height: 20rem;
+            width: 100%;
+            background-color: white;
+            scroll-snap-align: center;">
+                <div class="sc-jXyOrd cHHTHg" style="    padding-top: 7rem;
+    text-align: center;
+    -webkit-box-pack: center;
+    justify-content: center;">
+                    <div class="sc-jMNeTn iLXEM" style="font-size: 1.3rem;
+                    color: rgb(66, 72, 76);
+                    margin-bottom: 0.5rem;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    justify-content: center;">현재 <p class="sc-kNHJkd iRzzqa" style="    color: rgb(63, 195, 176);
+    border-bottom: 2px solid rgb(63, 195, 176);
+    margin: 0px 0px 0px 0.3rem;">0</p>개의 매장에서 MADE로</div>
+                    <div class="sc-jMNeTn iLXEM" style="font-size: 1.3rem;
+                    color: rgb(66, 72, 76);
+                    margin-bottom: 0.5rem;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    justify-content: center;">렌탈샵 매장관리를 하고 있습니다.</div>
+                </div>
+            </div>
+
+            <div class="sc-khcwgy lnnbWb" style="background: url(assets/images/home.png); height: 640px;            
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            scroll-snap-align: center;">
+                <div class="pp" style="    width: 100%;
+                background-color: rgba(41, 39, 34, 0.50);
+                height: 100%;">
+                <div class="sc-jxlxwV fLAGJJ" style="width: 1180px;
+                margin: auto;
+                padding: 8.5rem 1rem 0px;
+                text-align: center;">
+                    <div class="sc-jCmXbY bbRaPR" style="    font-size: 1.9rem;
+                    font-weight: bold;
+                    color: white;
+                    word-break: keep-all;
+                    line-height: 4.5;">스키장 렌탈샵을 운영하는 최고의 방법 </div>
+                    <div class="sc-jHVeDX juzBsD" style="font-size: 1.3rem;
+                    color: white;
+                    word-break: keep-all;
+                    line-height: 2.2;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    justify-content: center;">MADE는 스키장 렌탈샵을 가장 효과적으로 운영하시게 도와드립니다.</div>
+                    <div class="sc-jHVeDX juzBsD" style="font-size: 1.3rem;
+                    color: white;
+                    word-break: keep-all;
+                    line-height: 2.2;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    justify-content: center;">매장 운영에 필요한 모든 기능을 담고 있습니다
+                    </div>
+                    <div class="sc-jHVeDX juzBsD" style="font-size: 1.3rem;
+                    color: white;
+                    word-break: keep-all;
+                    line-height: 2.2;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    justify-content: center;">Lorem ipsum dolor sit amet consectetuer</div>
+                    <div class="sc-jHVeDX juzBsD" style="font-size: 1.3rem;
+                    color: white;
+                    word-break: keep-all;
+                    line-height: 2.2;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    justify-content: center;">Lorem ipsum dolor sit amet consectetuer.</div>
+                </div>
+                </div>
+                
+            </div>
+
+            <!-- <section id="home" class="home bg-black fix">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="main_home text-center">
+                            <div class="col-md-12">
+                                <div class="hello_slid">
+                                    <div class="slid_item">
+                                        <div class="home_text ">                                            
+                                            <h1 class="text-white">스키 의류 장비 가격비교</h1>
+                                            <h3 class="text-white">- 전국 렌탈샵 업체 의류 장비를 한눈에 -</h3>
+                                        </div>                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </section> -->
+
+
+
+
+            
+
+            <!--Business Section-->
+
+            <!-- End off Business section -->
+
+
+            <!--product section-->
+            <section id="product" class="product">
+                <div class="container">
+                    <div class="main_product roomy-80">
+                        <div class="head_title text-center fix">
+                            <h2 class="text-uppercase">고객 리뷰</h2>
+                            <h5>Clean and Modern design is our best specialist</h5>
+                        </div>
+
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/review.png" alt="" style="-webkit-filter: blur(2px);"/>
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/review.png" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>**렌탈샵 이용하신</h5>
+                                                        <h6>김** 고객님</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/review.png" alt="" style="-webkit-filter: blur(2px);"/>
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/review.png" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>**렌탈샵 이용하신</h5>
+                                                        <h6>박** 고객님</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/review.png" alt="" style="-webkit-filter: blur(2px);"/>
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/review.png" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>**렌탈샵 이용하신</h5>
+                                                        <h6>이** 고객님</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/review.png" alt="" style="-webkit-filter: blur(2px);"/>
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/review.png" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>**렌탈샵 이용하신</h5>
+                                                        <h6>나** 고객님</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 리뷰 추가 할거면 -->
+                                <!-- <div class="item">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/work-img1.jpg" alt="" />
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/work-img1.jpg" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>Your Work Title</h5>
+                                                        <h6>- Graphic Design</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/work-img2.jpg" alt="" />
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/work-img2.jpg" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>Your Work Title</h5>
+                                                        <h6>- Graphic Design</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/work-img3.jpg" alt="" />
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/work-img3.jpg" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>Your Work Title</h5>
+                                                        <h6>- Graphic Design</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="port_item xs-m-top-30">
+                                                    <div class="port_img">
+                                                        <img src="assets/images/work-img4.jpg" alt="" />
+                                                        <div class="port_overlay text-center">
+                                                            <a href="assets/images/work-img4.jpg" class="popup-img">+</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="port_caption m-top-20">
+                                                        <h5>Your Work Title</h5>
+                                                        <h6>- Graphic Design</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div><!-- End off row -->
+                </div><!-- End off container -->
+            </section><!-- End off Product section -->
+
+            <!-- <section id="test" class="test bg-grey roomy-60 fix">
+                <div class="container">
+                    <div class="row">                        
+                        <div class="main_test fix">
+
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="head_title text-center fix">
+                                    <h2 class="text-uppercase">What Client Say</h2>
+                                    <h5>Clean and Modern design is our best specialist</h5>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="test_item fix">
+                                    <div class="item_img">
+                                        <img class="img-circle" src="assets/images/test-img1.jpg" alt="" />
+                                        <i class="fa fa-quote-left"></i>
+                                    </div>
+
+                                    <div class="item_text">
+                                        <h5>Sarah Smith</h5>
+                                        <h6>envato.com</h6>
+
+                                        <p>Natus voluptatum enim quod necessitatibus quis
+                                            expedita harum provident eos obcaecati id culpa
+                                            corporis molestias.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="test_item fix sm-m-top-30">
+                                    <div class="item_img">
+                                        <img class="img-circle" src="assets/images/test-img2.jpg" alt="" />
+                                        <i class="fa fa-quote-left"></i>
+                                    </div>
+
+                                    <div class="item_text">
+                                        <h5>Sarah Smith</h5>
+                                        <h6>envato.com</h6>
+
+                                        <p>Natus voluptatum enim quod necessitatibus quis
+                                            expedita harum provident eos obcaecati id culpa
+                                            corporis molestias.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+
+            <div class="sc-kcRdTa exuCFh" style="    height: 25rem;
+            width: 100%; background-color: #f5f5f5;">
+                <div class="sc-kiivyf XgxRU" style="padding-top: 7rem;
+                font-size: 1.5rem;
+                color: rgb(66, 72, 76);
+                text-align: center;
+                -webkit-box-pack: center;
+                justify-content: center; margin-bottom: 15px;">어디에서나 쉽게 하는 매장관리</div>
+                <div class="sc-jwMghg kRsQqa" style="adding-top: 2rem;
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+                text-align: center;"
+                ><a href="#" style="text-decoration: none;">
+                        <img src="assets/images/google.png"
+                            class="sc-jHvNoi dQYFsS" style="    height: 5.5rem;
+                            padding-top: 0.5rem;
+                            margin-right: 1rem;"></a> 
+                        <a href="#" style="text-decoration: none;">
+                            <img src="assets/images/apple.png"
+                            class="sc-jCdxMl bZUNVq" style="height: 5.5rem;
+                            padding-top: 0.5rem;
+                            margin-left: 1rem;"></a></div>
+            </div>
+
+            
+
+            <footer class="footer_wrap">
+                <div class="footer_Sitemap">
+                    <div class="footer_section">
+                        <div class="text_no">회사정보</div>
+                        <div class="text_list">회사명: (주)캡스톤</div>
+                        <div class="text_list">사업자 등록 번호: 123-45-6789</div>
+                        <div class="text_list">대표: 김스키</div>
+                        <div class="text_list">주소: 충남 천안시 동남구 상명대길 31</div>
+                    </div>
+                    <div class="footer_section">
+                        <div class="text_no">고객센터</div>
+                        <div class="text_list">충남 천안시 동남구 상명대길 31</div>
+                        <div class="text_list">1600-1600</div>
+                        <div class="text_list">cstonefg@gmail.com</div>
+                        <div class="text_list">운영시간 : 10:00 ~ 22:00</div>
+                    </div>
+                    <div class="footer_section">
+                        <div class="text_no">링크</div>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="text_list">서비스 소개</div>
+                        </a>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="text_list">이용 약관</div>
+                        </a>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="text_list">개인정보처리방침</div>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+
+
+
+
+        </div>
+
+        <!-- JS includes -->
+
+        <script src="assets/js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="assets/js/vendor/bootstrap.min.js"></script>
+
+        <script src="assets/js/owl.carousel.min.js"></script>
+        <script src="assets/js/jquery.magnific-popup.js"></script>
+        <script src="assets/js/jquery.easing.1.3.js"></script>
+        <script src="assets/css/slick/slick.js"></script>
+        <script src="assets/css/slick/slick.min.js"></script>
+        <script src="assets/js/jquery.collapse.js"></script>
+        <script src="assets/js/bootsnav.js"></script>
+
+
+
+        <script src="assets/js/plugins.js"></script>
+        <script src="assets/js/main.js"></script>
+
+    </body>
+</html>

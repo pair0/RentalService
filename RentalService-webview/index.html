@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>여러개 마커에 이벤트 등록하기2</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+      }
+    #menu_wrap {position:absolute;top: 200px;right:0;height: 350px;width:300px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+    .bg_white {background:#fff;}
+    #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+    #menu_wrap .option{text-align: center;}
+    #menu_wrap .option p {margin:10px 0;}  
+    #menu_wrap .option button {margin-left:5px;}
+    #placesList li {list-style: none;}
+    .customoverlay {position:relative;border-radius:20px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+    .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+    .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+    .customoverlay .title1 {display:block; border-radius:20px 20px 0px 0px; width:130px; text-align:center;background:#fff;font-size:25px;padding:5px 5px 5px 5px;font-weight:bold;}
+    .customoverlay .title11 {display:block; border-radius:0px 0px 20px 20px; width:130px; text-align:center;background:#fff;font-size:15px;padding:5px 5px 5px 5px;font-weight:bold;}
+    .customoverlay .title2 {display:block; border-radius:20px 20px 0px 0px; width:130px; text-align:center;background:rgb(126, 143, 190);font-size:25px;padding:5px 5px 5px 5px;font-weight:bold;}
+    .customoverlay .title21 {display:block; border-radius:0px 0px 20px 20px; width:130px; text-align:center;background:rgb(126, 143, 190);font-size:15px;padding:5px 5px 5px 5px;font-weight:bold;}
+    .customoverlay:after {content:''; position:absolute; border-radius:20px; margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+    
+    #btn_group button{ border: 1px  solid rgb(42, 34, 161); margin:10px 0 10px 0; height: 80px;width:300px; background-color: rgba(0,0,0,0); color: skyblue; padding: 5px; }
+    #btn_group1 button{ border: 1px  solid rgb(42, 34, 161); float: left; margin-left: 0; height: 80px;width:150px; background-color: rgba(0,0,0,0); color: skyblue; padding: 5px; }
+    
+
+    </style>
+</head>
+<body>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBsYlI4RsHi6jR5DOSeD5WTwDXqqXhhxP0",
+      authDomain: "cstone-3dc2f.firebaseapp.com",
+      databaseURL: "https://cstone-3dc2f-default-rtdb.firebaseio.com",
+      projectId: "cstone-3dc2f",
+      storageBucket: "cstone-3dc2f.appspot.com",
+      messagingSenderId: "1088095057592",
+      appId: "1:1088095057592:web:b01119cd7a31c6bc3b664d",
+      measurementId: "G-LBGTN0FTR7"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+    
+    <div class="container" id="map"></div>
+        <div id="menu_wrap" class="bg_white">
+            <h3 style="color: black;">*중복 선택 가능</h4>
+            <hr style="background-color : skyblue">
+            <ul id="placesList"></ul>
+                <div id="btn_group1">
+                    <button id="button1"><h3>4시간</h3></button>
+                    <button id="button2"><h3>8시간</h3></button>
+                </div>
+                <div id="btn_group">
+                    <button id="button3"><h3>장비(스키/보드)</h3></button>
+                </div>
+                <div id="btn_group">
+                    <button id="button4"><h3>의류</h3></button>
+                </div>
+            <div id="pagination"></div>
+            
+
+        </div>
+        
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d285fae9baf154f45bd43dbcbd5c0ea6&libraries=services"></script>
+  <script>
+    const db = firebase.firestore(); //firestore() 불러오기
+    const store = db.collection("USER_allow");
+    var list = null;
+    var positions = [];
+    var map;
+    var search_point = [];          //검색한 마커를 담을 변수
+    var selectedMarker = null;    // 클릭한 마커를 담을 변수
+    var selectbutton = [null, null, null, null];      //클릭한 버튼을 담을 변수
+    var count = 0;
+    var overlay_list = [];
+
+    function fromFlutter(newTitle) {
+        if(newTitle != "0,0,0"){
+            list = newTitle.split(",");
+            count = 2;
+            console.log("list1"+list);
+            
+            if(list[0] == "0"){
+                var locPosition = new kakao.maps.LatLng(list[1], list[2]);
+                map.panTo(locPosition);
+            }
+            else
+            {
+                kakao_map(positions);
+            }
+            
+        }
+    }
+
+    function gotolocation(newTitle){
+            list_position = newTitle.split(",");
+            if(list_position[0] < 0){
+                list_position[0] = list_position[0] * -1;
+            }
+            if(list_position[1] < 0){
+                list_position[1] = list_position[1] * -1;
+            }
+
+
+            var locPosition = new kakao.maps.LatLng(list_position[0], list_position[1]);
+            map.panTo(locPosition);
+            //kakao_map(positions);
+    }
+
+    map_Create();
+
+    function map_Create(){
+        var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+
+        var mapOption = { 
+            center: new kakao.maps.LatLng(37.339355, 127.293175), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+            
+        map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        kakao_map(positions);
+        console.log("또잉?")
+    }
+
+    async function asyncFunc(){
+        var num;
+        var position = [];
+        var docRef = db.collection('USER_allow').orderBy("store_id").get().then(결과 => {
+            결과.forEach(doc => {
+                if (selectbutton[0] == null && selectbutton[1] == null && selectbutton[2] == null && selectbutton[3] == null) { num = (doc.data().price_info.p_info2); count = 0; }
+                    if (selectbutton[0] != null && selectbutton[2] == null && selectbutton[3] == null) { num = (doc.data().price_info.p_info2); count = 1; }
+                    if (selectbutton[0] != null && selectbutton[2] != null && selectbutton[3] == null) { num = (doc.data().price_info.p_info2); count = 1; }
+                    if (selectbutton[0] != null && selectbutton[2] == null && selectbutton[3] != null) { num = (doc.data().price_info.p_info1); count = 1; }
+                    if (selectbutton[0] != null && selectbutton[2] != null && selectbutton[3] != null) { num = (doc.data().price_info.p_info3); count = 1; }
+                    if (selectbutton[1] != null && selectbutton[2] == null && selectbutton[3] == null) { num = (doc.data().price_info.p_info5); count = 1; }
+                    if (selectbutton[1] != null && selectbutton[2] != null && selectbutton[3] == null) { num = (doc.data().price_info.p_info5); count = 1; }
+                    if (selectbutton[1] != null && selectbutton[2] == null && selectbutton[3] != null) { num = (doc.data().price_info.p_info4); count = 1; }
+                    if (selectbutton[1] != null && selectbutton[2] != null && selectbutton[3] != null) { num = (doc.data().price_info.p_info6); count = 1; }
+                if(doc.data().store_id != 0){
+                position.push(
+                    {
+                    content: '<div class="customoverlay">'+
+                        '<span class="title1">'+
+                            doc.data().store_name+ 
+                            '</span>'+
+                            '<span class="title11">'+
+                            num+
+                            '</span>'+
+                            '</div>',
+                    latlng : new kakao.maps.LatLng(doc.data().위도, doc.data().경도)
+                    })
+                    console.log(position);
+                }
+            })
+            
+            return position;
+        });
+
+        code = await docRef;
+        positions = code; //위치 정보를 담는 변수 생성
+        kakao_map(positions);
+    }
+
+    function kakao_map(positions){
+        //test용
+        
+        if (count == 0){
+            // 버튼 클릭이벤트 등록
+            var button1 = document.getElementById('button1');
+            button1.addEventListener('click', button1_click);
+            var button2 = document.getElementById('button2');
+            button2.addEventListener('click', button2_click);
+            var button3 = document.getElementById('button3');
+            button3.addEventListener('click', button3_click);   
+            var button4 = document.getElementById('button4');
+            button4.addEventListener('click', button4_click);
+            button1.click();
+            button3.click();
+        }
+        
+        function button1_click(e){
+            if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+
+            //부모 div까지 발생하는 클릭 이벤트 중지
+            if (e.stopPropagation) e.stopPropagation();
+            else e.cancelBubble = true; // IE 대응
+            console.log("button1_click")
+            // 클릭된 버튼가 없고, click 버튼이 클릭된 버튼이 아니면
+                // 버튼의 이미지를 클릭 이미지로 변경합니다
+            if (selectbutton[0] == null || selectbutton[0] != button1) {
+                !!selectbutton[1] && (button2.style.backgroundColor = "rgba(0,0,0,0)") && (selectbutton[1] = null);
+                // 현재 클릭된 버튼의 이미지는 클릭 아마자으로 변경합니다
+                button1.style.backgroundColor = "rgb(126, 143, 190)";
+                // 클릭된 버튼을 현재 클릭된 버튼 객체로 설정합니다
+                selectbutton[0] = button1;
+                console.log("버튼1번 클릭");
+                asyncFunc();
+            }
+            
+        }
+
+        function button2_click(e){
+            if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+
+            //부모 div까지 발생하는 클릭 이벤트 중지
+            if (e.stopPropagation) e.stopPropagation();
+            else e.cancelBubble = true; // IE 대응
+            console.log("button2_click")
+            
+            // 클릭된 버튼이 없고, click 버튼이 클릭된 버튼이 아니면
+            // 버튼의 이미지를 클릭 이미지로 변경합니다
+            if (selectbutton[1] == null || selectbutton[1] != button2) {
+                !!selectbutton[0] && (button1.style.backgroundColor = "rgba(0,0,0,0)") && (selectbutton[0] = null);
+                // 현재 클릭된 버튼의 이미지는 클릭 이미지로 변경합니다
+                button2.style.backgroundColor = "rgb(126, 143, 190)";
+                // 클릭된 버튼을 현재 클릭된 버튼 객체로 설정합니다
+                selectbutton[1] = button2;
+                asyncFunc();
+            }
+        }
+        
+        function button3_click(e){
+            if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+
+            //부모 div까지 발생하는 클릭 이벤트 중지
+            if (e.stopPropagation) e.stopPropagation();
+            else e.cancelBubble = true; // IE 대응
+            console.log("button3_click")
+            
+            // 클릭된 버튼이 없고, click 버튼이 클릭된 버튼이 아니면
+                // 버튼의 이미지를 클릭 이미지로 변경합니다
+            if (selectbutton[2] == null || selectbutton[2] != button3) {
+                // 현재 클릭된 버튼의 이미지는 클릭 이미지로 변경합니다
+                button3.style.backgroundColor = "rgb(126, 143, 190)";
+                // 클릭된 버튼을 현재 클릭된 버튼 객체로 설정합니다
+                selectbutton[2] = button3;
+            }
+
+            //클릭된 버튼을 한번 더 클릭시 클릭 해제
+            else if ((selectbutton[2] != null || selectbutton[2] == button3) && selectbutton[3] != null){
+                button3.style.backgroundColor = "rgba(0,0,0,0)";
+                selectbutton[2] = null;
+            }
+            console.log("버튼3번 클릭");
+            asyncFunc();
+        }
+
+        function button4_click(e){
+            if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+
+            //부모 div까지 발생하는 클릭 이벤트 중지
+            if (e.stopPropagation) e.stopPropagation();
+            else e.cancelBubble = true; // IE 대응
+            console.log("button4_click")
+            // 클릭된 버튼가 없고, click 버튼이 클릭된 버튼이 아니면
+                // 버튼의 이미지를 클릭 이미지로 변경합니다
+            if (selectbutton[3] == null || selectbutton[3] != button4) {
+                // 현재 클릭된 버튼의 이미지는 클릭 아마자으로 변경합니다
+                button4.style.backgroundColor = "rgb(126, 143, 190)";
+                // 클릭된 버튼을 현재 클릭된 버튼 객체로 설정합니다
+                selectbutton[3] = button4;
+            }
+
+            //클릭된 버튼를 한번 더 클릭시 클릭 해제
+            else if ((selectbutton[3] != null || selectbutton[3] == button4)&& selectbutton[2] != null){
+                button4.style.backgroundColor = "rgba(0,0,0,0)";
+                selectbutton[3] = null;
+            }
+            asyncFunc();
+        }
+
+        
+        for (var i = 0; i < positions.length; i ++) {
+            //커스텀 오버레이 엘리먼트에 컨텐츠 추가
+            var normal_content = document.createElement('div'+i);
+            var click_content = document.createElement('div'+i);
+            normal_content.innerHTML = positions[i].content;
+            click_content.innerHTML = positions[i].content.replace(/title1/gi, 'title2');
+            
+            // 마커를 생성합니다
+            var normalOrigin = normal_content,
+                clickOrigin = click_content;
+                
+            // 마커를 생성하고 지도위에 표시합니다
+            addOverlay(i+1, positions[i].latlng, normalOrigin, clickOrigin)
+        }
+    
+        
+        // 마커를 생성하고 지도 위에 표시하고, 마커에 mouseover, mouseout, click 이벤트를 등록하는 함수입니다
+        function addOverlay(store_id, position, normalOrigin, clickOrigin) {
+            //버튼이 눌릴 시 커스텀오버레이 초기화
+            if (store_id == 1 && (selectbutton[0] != null || selectbutton[1] != null)) {
+                for (j=1; j<overlay_list.length; j++){
+                    overlay_list[j].setMap(null)
+                     console.log(j)
+                }
+                overlay_list = [];
+            }
+
+            // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
+            var customOverlay = new kakao.maps.CustomOverlay({
+                map: map,
+                position: position,
+                content: normalOrigin,
+                yAnchor: 1
+            });
+            
+            overlay_list[store_id] = customOverlay;
+
+            //마커 클릭 이벤트
+            // 마커 객체에 마커아이디와 마커의 기본 이미지를 추가합니다
+            customOverlay.normalOrigin = normalOrigin;
+            search_point[store_id] = normalOrigin;
+
+            // 커스텀 오버레이에 mouseClick이벤트를 등록합니다
+            addEventHandle(normalOrigin, 'click', onMouseClick);
+            addEventHandle(clickOrigin, 'click', onMouseClick);
+            addEventHandle(document, 'click', onMouseClick_map);
+
+            if(selectedMarker != null){
+                if(selectedMarker.getPosition().equals(customOverlay.getPosition())){
+                    customOverlay.setContent(clickOrigin);
+                    selectedMarker = customOverlay;
+                }
+            }
+            
+            if(list != null && store_id == list[0]){
+                // 이동할 위도 경도 위치를 생성합니다
+                var moveLatLon = new kakao.maps.LatLng(list[1], list[2]);
+                // 지도 중심을 이동 시킵니다
+                map.setCenter(moveLatLon);
+                var search_list = list[0]
+                search_point[Number(search_list)].click();
+                count = 1;
+                list = null;
+            }
+                
+            function onMouseClick(e) {
+                // 커스텀 오버레이를 드래그 할 때, 내부 텍스트가 영역 선택되는 현상을 막아줍니다.
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else {
+                    e.returnValue = false;
+                }
+                console.log("발생!!")
+
+                //부모 div까지 발생하는 클릭 이벤트 중지
+                if (e.stopPropagation) e.stopPropagation();
+                else e.cancelBubble = true; // IE 대응
+
+                // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+                // 마커의 이미지를 클릭 이미지로 변경합니다
+                if (selectedMarker == null || selectedMarker != customOverlay) {
+                    console.log(customOverlay)
+                    // 클릭된 마커 객체가 null이 아니면
+                    // 클릭된 마커의 이미지를 기본 이미지로 변경하고
+                    !!selectedMarker && selectedMarker.setContent(selectedMarker.normalOrigin);
+                    !!selectedMarker && selectedMarker.setZIndex(0);
+                    
+                    // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+                    customOverlay.setContent(clickOrigin);
+
+                    //클릭 이벤트가 발생했을 때 앱으로 해당 가게 정보를 보내준다.
+                    const stateQuery = store.where("store_id", "==", store_id)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        var sned = doc.data().store_name + "," + doc.data().store_address + "," + doc.data().store_number + "," + doc.data().main_number
+                        console.log(sned);
+                        jams.postMessage(sned);
+                        });
+                    })
+                    // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+                    selectedMarker = customOverlay;
+                    customOverlay.setZIndex(1);
+                }
+
+                //클릭된 마커를 한번 더 클릭시 클릭 해제
+                else if (selectedMarker != null || selectedMarker == customOverlay){
+                  customOverlay.setContent(normalOrigin);
+                  !!selectedMarker && selectedMarker.setZIndex(0);
+                  selectedMarker = null;
+                  jams.postMessage("false");
+                }
+            }
+
+            function onMouseClick_map(e) {
+              //자식 div까지 발생하는 클릭 이벤트 중지
+              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+              else e.isImmediatePropagationEnabled = false;// IE 대응
+              console.log(customOverlay.getZIndex());
+              //클릭된 마커가 없으면 실행 X
+              if(selectedMarker != null){
+                !!selectedMarker && selectedMarker.setContent(selectedMarker.normalOrigin);
+                !!selectedMarker && selectedMarker.setZIndex(0);
+                selectedMarker = null;
+                jams.postMessage("false");
+              }
+            }
+
+            // target node에 이벤트 핸들러를 등록하는 함수힙니다  
+            function addEventHandle(target, type, callback) {
+                if (target.addEventListener) {
+                    target.addEventListener(type, callback);
+                } else {
+                    target.attachEvent('on' + type, callback);
+                }
+            }
+
+            // target node에 등록된 이벤트 핸들러를 제거하는 함수힙니다 
+            function removeEventHandle(target, type, callback) {
+                if (target.removeEventListener) {
+                    target.removeEventListener(type, callback);
+                } else {
+                    target.detachEvent('on' + type, callback);  
+                }
+            }
+        }
+    }
+
+   </script>  
+</body>
+</html>
