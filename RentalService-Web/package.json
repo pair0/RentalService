@@ -17,7 +17,7 @@
     "express-generator": "^4.16.1",
     "express-session": "^1.17.2",
     "express-session-file-store": "^1.0.2",
-    "firebase-admin": "^10.0.2",
+    "firebase-admin": "^13.0.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
